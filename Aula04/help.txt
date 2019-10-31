@@ -1,0 +1,168 @@
+1. Criando um Projeto WEB do zero: Digitar "yarn create react-app projeto07" na
+raiz dos seus projetos e depois abrir o VSCode (code .)
+2. Dentro do pacote "react-scripts" que está o WebPack e o Babel
+3. o comando "yarn start" irá iniciar o server de desenvolvimento localhost:3000
+4. Excluir os arquivos Readme.md, manifest.json, App.test, App.css,
+serviceWorker, logo, index.css;
+5. Remover os comentários do index.js e as referencias
+do serverWorker e css
+6. Remover os comentários do index.html e deixar basico
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+  </body>
+</html>
+7. No arquivo package.json remover referencias do eslint
+8. No arquivo App.js remover import do App.css e da logo
+e deixar:
+import React from 'react';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Hello World.</h1>
+    </div>
+  );
+}
+
+export default App;
+9. Configurar  o ESLINT, PRETTIER e o EDITORCONFIG
+10. Na raiz do projeto botao direito e gerar o arquivo EDITORCONFIG
+root = true
+[*]
+end_of_line = lf
+indent_style = space
+indent_size = 2
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+11. Adicionar o ESLINT como dependencia de desenvolvimento:
+"yarn add eslint -D"
+12. Depois que finalizar esse processo digitar "yarn eslint --init" responder:
+- To check syntax, find problems, and enforce code style
+- JavaScript modules (import/export)
+- React
+- Browser
+- Use a popular style guide
+- Airbnb (https://github.com/airbnb/javascript)
+- JavaScript
+- Depois Yes para duas ultimas perguntas.
+13. Remover o arquivo package-lock.json gerado pelo yarn e executar o comando
+"yarn" na raiz do projeto07 para atualizar as dependencias dentro do arquivo
+yarn.lock
+14. Depois instalar o Prettier como dependencia de desenvolvimento (-D):
+"yarn add prettier eslint-config-prettier eslint-plugin-prettier babel-eslint -D"
+15.Editar o arquivo .eslintrc
+module.exports = {
+  env: {
+    browser: true,
+    es6: true
+  },
+  extends: ['airbnb', 'prettier', 'prettier/react'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly'
+  },
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    ecmaVersion: 2018,
+    sourceType: 'module'
+  },
+  plugins: ['react', 'prettier'],
+  rules: {
+    'prettier/prettier': 'error',
+    'react/jsx-filename-extension': ['warn', { extensions: ['.jsx', '.js'] }],
+    'import/prefer-default-export': 'off'
+  }
+};
+16. Criar o arquivo .prettierrc na raiz do projeto para o prettier e a styleguide
+do airbnb se conversem melhor:
+{
+  "singleQuote": true,
+  "trailingComma": "es5"
+}
+
+
+
+code completation:
+cc gera uma classe herda de Compnents
+imrc import react
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+TERMINADO PASSOS DE CONFIGURACAO DA WEB App
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1. Crair o arquivo routes.js na pasta SRC e executar comando:
+yarn add react-router-dom
+2.yarn add styled-components - para estilizar os novos components
+3. yarn add react-icons - pegar icones do materialize md
+4. yarn add polished - lib que lida com cores no js
+CONFGURAR API
+1. API foi criada usando o JSONSERVER https://github.com/typicode/json-server
+2. Executo comando 'yarn global add json-server'
+3. Download do arquivo server.json [https://app.rocketseat.com.br/api/files/1562597446083.json]
+4. 'yarn add axios' para tratar nossa API
+5. Criar o arquivo api.js na pasta services usando porta 3333 que será porta do
+backend
+6. Executar comando: 'json-server server.json -p 3333 -w' (-w = watch)
+7. Fazer os ajustes n index.js para receber os dados do JSONSERVER
+CONFIGURAR O REDUX
+1. Instalar o Redux: 'yarn add redux react-redux' (sao dois pacotes)
+2. Trabalhar no REDUCER.JS do cart;
+3. Criar as ACTIONS
+CONFIGURAR o REACTOTRON
+1. yarn add reactotron-react-js reactotron-redux
+CONFGURAR IMMER
+1. yarn add immer
+CONFIGURAR REDUX-SAGA
+1. yarn add redux-saga
+2. yarn add reactotron-redux-saga
+3. Verificar quantidade e estoque e controlar o carrinho. PAra isso no sagas.js
+dentro da function addToCart() fazer a verificacao usando no JSON stock
+const stock = yield call(api.get, `/stock/${id}`);
+
+  const stockAmount = stock.data.amount;
+  const currentAmount = productExists ? productExists.amount : 0;
+  const amount = currentAmount + 1;
+  if (amount > stockAmount) {
+    console.tron.warn('ERRO');
+    return;
+  }
+CONFIGURAR O TOASTIFY
+1. yarn add react-toastify para controlar as mensagens de erro ao usuario, no
+caso as mensagens realcionadas com quantidade em estoque por exemplo;
+2. No App.js adicionar = import { ToastContainer } from 'react-toastify' e o
+<ToastContainer autoClose={3000} />;
+3. No global.js adicionar = import 'react-toastify/dist/ReactToastify.css';
+4. No sagas.js adicionar = import toast from 'react-toastify';
+CONFIGURAR  O HISTORY
+1. yarn add history
+2. server para controlar as history api que o react-router-dom utiliza
+3. Na pasta services criar history.js
+4. No App.js importar o history.js e trocar elemento <BrowserRouter> por
+<Router history={history}>
+5. No sagas.js Importar o history e adiconar history.push('/cart');
+
+
+CONFIGURAR O HOOKS
+1. yarn add eslint-plugin-react-hooks -D
+2. No arquivo .eslintrc adiconar = plugins: ['react', 'prettier', 'react-hooks'],
+e  as rules
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+3.
+
+
